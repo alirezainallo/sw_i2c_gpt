@@ -1,0 +1,20 @@
+{
+    "name": "sw_i2c_gpt",
+    "version": "1.0.0",
+    "description": "A wav handler library for STM32 with HAL.",
+    "keywords": "template, example",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alirezainallo/sw_i2c_gpt.git"
+    },
+    "authors": [
+        {
+            "name": "Alireza Inallo",
+            "email": "alirezainallo@gmail.com",
+            "maintainer": true
+        }
+    ],
+    "license": "MIT",
+    "frameworks": "HAL",
+    "platforms": "*"
+}
