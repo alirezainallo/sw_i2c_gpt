@@ -1,7 +1,8 @@
 #ifndef SOFT_I2C_H
 #define SOFT_I2C_H
 
-#include "stm32f4xx_hal.h"
+#include "main.h"
+// #include "stm32f4xx_hal.h"
 
 #define SOFT_I2C_USE_DWT_DELAY 1
 
