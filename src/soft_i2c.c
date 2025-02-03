@@ -8,10 +8,28 @@
 #define SDA_LOW()  HAL_GPIO_WritePin(SOFT_I2C_SDA_PORT, SOFT_I2C_SDA_PIN, GPIO_PIN_RESET)
 #define SDA_READ() HAL_GPIO_ReadPin(SOFT_I2C_SDA_PORT, SOFT_I2C_SDA_PIN)
 
+
+#if SOFT_I2C_USE_DWT_DELAY
+void DWT_Init(void) {
+    CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;  // Enable DWT
+    DWT->CYCCNT = 0;  // Reset cycle counter
+    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;  // Enable cycle counter
+}
+void DWT_Delay_us(uint32_t us) {
+    uint32_t start = DWT->CYCCNT;
+    uint32_t ticks = (HAL_RCC_GetHCLKFreq() / 1000000) * us; // Convert us to CPU cycles
+    while ((DWT->CYCCNT - start) < ticks);
+}
+static void I2C_Delay(void) {
+    DWT_Delay_us(5);  // Adjust to match desired I2C speed
+}
+#else //SOFT_I2C_USE_DWT_DELAY
 // Small delay
 static void I2C_Delay(void) {
     for (volatile int i = 0; i < 10; i++);  // Adjust timing if needed
 }
+#endif //SOFT_I2C_USE_DWT_DELAY
+
 
 // Initialize I2C GPIOs
 void Soft_I2C_Init(void) {
@@ -30,6 +48,11 @@ void Soft_I2C_Init(void) {
     // Set default idle state
     SCL_HIGH();
     SDA_HIGH();
+
+    #if SOFT_I2C_USE_DWT_DELAY
+    DWT_Init();
+    #else //SOFT_I2C_USE_DWT_DELAY
+    #endif //SOFT_I2C_USE_DWT_DELAY
 }
 
 // Generate START condition

@@ -3,6 +3,8 @@
 
 #include "stm32f4xx_hal.h"
 
+#define SOFT_I2C_USE_DWT_DELAY 1
+
 // Define GPIO pins for SDA and SCL
 #define SOFT_I2C_SCL_PORT   GPIOB
 #define SOFT_I2C_SCL_PIN    GPIO_PIN_6
