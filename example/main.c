@@ -5,6 +5,15 @@ int main(void) {
     SystemClock_Config();
     
     Soft_I2C_Init();
+    UART_Init();  // Needed for printf debugging
+    
+    uint8_t deviceAddr = 0x50;  // Example I2C device address
+
+    if (Soft_I2C_IsDeviceReady(deviceAddr)) {
+        printf("Device at 0x%02X is READY!\r\n", deviceAddr);
+    } else {
+        printf("Device at 0x%02X is NOT responding!\r\n", deviceAddr);
+    }
     
     uint8_t dataToWrite[2] = {0x55, 0xAA};
     uint8_t dataToRead[2];

@@ -201,3 +201,14 @@ uint8_t i2c_read(uint8_t i2cAdd, uint8_t regAdd, uint8_t *data, uint32_t dataLen
     Soft_I2C_Stop();
     return 1;  // Success
 }
+
+uint8_t Soft_I2C_IsDeviceReady(uint8_t i2cAdd) {
+    Soft_I2C_Start();
+    Soft_I2C_Write(i2cAdd << 1);  // Send address with write bit (0)
+
+    uint8_t ack = Soft_I2C_Wait_ACK();  // Check if device responds
+
+    Soft_I2C_Stop();
+    
+    return ack;  // Return 1 if device is ready, 0 if not
+}

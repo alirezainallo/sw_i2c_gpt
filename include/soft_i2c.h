@@ -25,5 +25,6 @@ void Soft_I2C_Send_NACK(void);
 // High-level I2C functions for multi-byte communication
 uint8_t i2c_write(uint8_t i2cAdd, uint8_t regAdd, uint8_t *data, uint32_t dataLen);
 uint8_t i2c_read(uint8_t i2cAdd, uint8_t regAdd, uint8_t *data, uint32_t dataLen);
+uint8_t Soft_I2C_IsDeviceReady(uint8_t i2cAdd);
 
 #endif
